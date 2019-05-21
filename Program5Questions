@@ -130,5 +130,89 @@ public class Solution {
 *************************************
 5.IP Address Validation
 *************************************
+import java.io.*;
+import java.util.*;
+import java.text.*;
+import java.math.*;
+import java.util.regex.*;
+
+public class Solution {
+
+      public static String isValidIP(String ip)
+      {
+          if(isIPV4Reg(ip)) return "IPv4";
+	  //if(isIPV4(ip)) return "IPv4";
+           if(isIPV6Reg(ip)) return "IPv6";
+	   // if(isIPV6(ip)) return "IPv6";
+           return "Neither";
+      }
+    public static boolean isIPV4Reg(String ip)
+    { String ipv4Pattern="^((25[0-5]|2[0-4]\\d|[01]?\\d\\d?)\\.){3}(25[0-5]|2[0-4]\\d|[01]?\\d\\d?)$";
+        return (ip.matches(ipv4Pattern));
+    }
+
+     public static boolean isIPV6Reg(String ip)
+    {   String ipv6Pattern="^([0-9a-fA-F]{1,4}\\:){7}([0-9a-fA-F]{1,4})$";
+        return (ip.matches(ipv6Pattern));
+    }
+    public static boolean isIPV4(String ip)
+{    int charLen=ip.length()-ip.replace(".", "").length();
+
+       if(charLen!=3)
+       {
+           return false;
+       }
+       String [] ipArr= ip.split("\\.");
+    
+       if(ipArr.length!=4)
+       {
+            return false;
+       }
+       for(String part:ipArr)
+       {
+           if(Integer.parseInt(part)>255 ||Integer.parseInt(part)<0 )
+           return false;
+       }
+       return true;
+    
+}
+
+public static boolean isIPV6(String ip)
+{    int charLen=ip.length()-ip.replace(":", "").length();
+
+       if(charLen!=7)
+       {
+           return false;
+       }
+       String [] ipArr= ip.split("\\:");
+    
+       if(ipArr.length!=8)
+       {
+            return false;
+       }
+       for(String part:ipArr)
+       {
+           if(part.length()>4 || part.length()<1) return false;
+           for(int i=0; i<=part.length()-1; i++)
+           {    char c =  Character.toLowerCase(part.charAt(i));
+           if(!(c >= '0' && c <= '9') && !(c >= 'a' && c<= 'f') ) return false;
+             
+       }
+       }
+       return true;
+    
+}
+
+    public static void main(String[] args) throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int num =Integer.parseInt( br.readLine()); 
+    
+     for (int i=0; i<num; ++i)
+    {
+        System.out.println(isValidIP(br.readLine()));
+      
+    }
+}
+}
 
 
